@@ -73,10 +73,14 @@ def training():
         ssd_model = ssd300.SSD300(sess,True)
         sess.run(tf.global_variables_initializer())
         saver = tf.train.Saver(var_list=tf.trainable_variables())
-        if os.path.exists(FLAGS.model_dir+'session.ckpt.index') :
-            print('\nStart Restore')
-            saver.restore(sess, FLAGS.model_dir+'session.ckpt')
-            print('\nEnd Restore')
+        if FLAGS.finetune:
+            print('Finetune from %s'%FLAGS.finetune)
+            ckpt = tf.train.get_checkpoint_state(FLAGS.finetune)
+            if ckpt and ckpt.model_checkpoint_path:
+                saver.restore(sess, ckpt.model_checkpoint_path)
+            else:
+                raise ValueError('Failed to load model.')
+            print('-------------------------')
          
         print('\nStart Training')
         min_loss_location = 100000.
@@ -115,7 +119,7 @@ def training():
     print('End Training')
     
 '''
-获取voc2007训练图片数据
+获取voc训练图片数据
 train_data：训练批次图像，格式[None,width,height,3]
 actual_data：图像标注数据，格式[None,[None,center_x,center_y,width,height,lable]]
 '''
