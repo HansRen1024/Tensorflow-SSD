@@ -40,8 +40,8 @@ parser.add_argument('--log_frequency', type=int, default=LOG_FREQUENCY)
 parser.add_argument('--max_steps', type=int, default=MAX_STEPS)
 
 # For distributed
-PS_HOSTS = '10.107.3.151:2222' # Comma-separated list of hostname:port pairs
-WORKER_HOSTS = '10.107.3.151:2224,10.107.3.120:2225,10.107.3.90:2226' # Comma-separated list of hostname:port pairs
+PS_HOSTS = '10.100.3.101:2222' # Comma-separated list of hostname:port pairs
+WORKER_HOSTS = '10.100.3.101:2224,10.100.3.100:2225,10.107.3.10:2226' # Comma-separated list of hostname:port pairs
 
 parser.add_argument('--issync', type=bool, default=ISSYNC)
 parser.add_argument("--job_name", type=str,
